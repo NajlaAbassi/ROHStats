@@ -1,4 +1,4 @@
-# A simple step by step guide for Runs of Homozygosity analysis
+# A simple guide for Runs of Homozygosity analysis
 ## Introduction
 Runs Of Homozygosity or ROH are uninterrupted homozygous regions of the genome. They appear when two copies of an ancestral haplotype are joined in an individual. Short ROH indicate distant inbreeding, while long ROH indicate recent inbreeding. This guide will help you estimate overall homozygosity in a population using PLINK data.
 ## What tools you will need?
@@ -21,4 +21,4 @@ After identifying ROH in your sample, you can now estimate homozygosity mesures:
 + FHOM
 
 ### Contributor
-+ Najla Abassi.
++ Najla Abassi (March, 2023)
