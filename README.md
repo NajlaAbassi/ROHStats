@@ -5,5 +5,6 @@ Runs Of Homozygosity or ROH are uninterrupted homozygous regions of the genome. 
 + PLINK
 + RStudio
 ### Step 1: Data management and Quality Control
-### Controbutor
+You have make sure that all your datasets are in the same genome version. If not, you can use a tool like [LiftOver] (https://genome.ucsc.edu/cgi-bin/hgLiftOver) to convert your files into 1 genome assembly.
+### Contributor
 + Najla Abassi.
