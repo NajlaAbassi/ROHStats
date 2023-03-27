@@ -33,7 +33,4 @@ homozyg_density <- function(bim_path) {
   return(snp_density)
 }
 
-homozyg_density("C:/Users/Lenovo/Desktop/merging/final_dataset/all_populations.bim")
-homozyg_snp("C:/Users/Lenovo/Desktop/ANALYSE ROH MASTER/WORLD_POPULATION_DATA/merge/QC/hardy_lebanon.hwe",75)
-
 
