@@ -1,10 +1,16 @@
 # A simple step by step Runs of Homozygosity analysis guide
 ## Introduction
-Runs Of Homozygosity or ROH are uninterrupted homozygous regions of the genome. They appear when two copies of an ancestral haplotype are joined in an individual. Short ROH indicate distant inbreeding, while long ROH indicate recent inbreeding. This guide will help you estimate overall homozygosity in a population using highthrouput genotyping data.
+Runs Of Homozygosity or ROH are uninterrupted homozygous regions of the genome. They appear when two copies of an ancestral haplotype are joined in an individual. Short ROH indicate distant inbreeding, while long ROH indicate recent inbreeding. This guide will help you estimate overall homozygosity in a population using PLINK data.
 ## What tools you will need?
 + PLINK
 + RStudio
 ### Step 1: Data management and Quality Control
-You have make sure that all your datasets are in the same genome version. If not, you can use a tool like [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) to convert your files into 1 genome assembly.
+Before you even start your analysis, you have make sure that all your datasets are in the same genome version. If not, you can use a tool like [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) to convert your files into 1 genome assembly.
+#### Quality Control
+1- Remove heterosomes
+`plink --bfile input_data --not-chr 23 24 25 26 --make-bed --out output_data`
+In fact PLINK refers to the XX chromosome as 23, YY chromosome as 24, XY Pseudo-autosomal region of X as 25, and MT Mitochondrial as 26.
+
+
 ### Contributor
 + Najla Abassi.
