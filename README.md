@@ -21,4 +21,4 @@ After identifying ROH in your sample, you can now estimate homozygosity mesures:
 + FHOM
 
 ### Contributor
-+ Najla Abassi (March, 2023)
++ Najla Abassi: developer and writer (March, 2023)
