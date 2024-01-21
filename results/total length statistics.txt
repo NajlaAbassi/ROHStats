@@ -1,0 +1,2 @@
+maximum	minimum	mean_value	sd_value
+71.59	0	17.81	16.19
