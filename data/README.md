@@ -2,10 +2,10 @@
 The data we used for this analysis was publically available in [WIDDE](http://widde.toulouse.inra.fr/widde/) References: Sempéré, G. et al, BMC Genomics, 2015 (https://doi.org/10.1186/s12864-015-2181-1)     
 We selected 4 populations:
 + Population 1: ABO - Abondance
-	Chip: Illumina BovineSNP50v1
-	Samples: 22
-	Project: BOVDIV
-	References: Gautier et al, PLoS One, 2010 (https://doi.org/10.1371/journal.pone.0013038)
+	Chip: Illumina BovineSNP50v1,
+	Samples: 22,
+	Project: BOVDIV,
+	References: Gautier et al, PLoS One, 2010 (https://doi.org/10.1371/journal.pone.0013038),
 	Licences: CC0
 
 + Population 2: ANG - Angus
