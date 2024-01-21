@@ -13,16 +13,17 @@ In fact PLINK refers to the XX chromosome as 23, YY chromosome as 24, XY Pseudo-
 ### Step 2: Identification of Runs of Homozygosity
 PLINK is based on the principle of a sliding window of X SNPs that traverses the entire genome to show homozygotes over a certain minimum length. THe following command can be used to call ROH:   
 `--homozyg-window-snp 50 --homozyg-window-het 1 --homozyg-window-missing 2 --homozyg-gap 100 --homozyg-kb 500 --homozyg-density x --homozyg-snp y`, where x and y are respectively determined using the functions *homozyg_density()*  and *homozyg_snp()*  
-### Step 3: Genomic distribution of ROH (ROH islands)
-ROH islands(ROHi) are regions in the genome where the percentage of individuals within a population deviates from the anticipated values predicted by a binomial distribution. To identify these regions, you can use the list of ROHs previously identified by PLINK and the [rohproc R Package](https://github.com/CeballosGene/rohproc)
-### Step 4: Functional Annotation
-Incorporating functional enrichment annotation allowes to explore potential connections between ROHi and specific functional pathways or gene sets. For that you can use [BiomaRt R package](https://bioconductor.org/packages/release/bioc/html/biomaRt.html)
-### Step 5: Statistical analysis
+### Step 3: Statistical analysis
 After identifying ROH in your sample, you can now estimate homozygosity mesures:   
 + Number of ROH
 + Total run length
 + FROH
 + FHOM
+### Step 4: Genomic distribution of ROH (ROH islands)
+ROH islands(ROHi) are regions in the genome where the percentage of individuals within a population deviates from the anticipated values predicted by a binomial distribution. To identify these regions, you can use the list of ROHs previously identified by PLINK and the [rohproc R Package](https://github.com/CeballosGene/rohproc)
+### Step 5: Functional Annotation
+Incorporating functional enrichment annotation allowes to explore potential connections between ROHi and specific functional pathways or gene sets. For that you can use [BiomaRt R package](https://bioconductor.org/packages/release/bioc/html/biomaRt.html)
+
 
 ### Contributor
 + Najla Abassi: developer and writer
