@@ -13,7 +13,7 @@ We selected 2 populations:
 	Samples: 37,
 	Project: SheepHapMap,
 	References: Kijas et al, PLoS Biology, 2012 (https://doi.org/10.1371/journal.pbio.1001258),
-	Licences: CC-BY </br></br></br>
+	Licences: CC-BY </br></br>
 MARKER SELECTION: 46819</br>
 Selected chromosomes: OAR1 OAR2 OAR3 OAR4 OAR5 OAR6 OAR7 OAR8 OAR9 OAR10 OAR11 OAR12 OAR13 OAR14 OAR15 OAR16 OAR17 OAR18 OAR19 OAR20 OAR21 OAR22 OAR23 OAR24 OAR25 OAR26
 ----------------
