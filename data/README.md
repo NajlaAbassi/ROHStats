@@ -1,28 +1,28 @@
 ### Dataset
 The data we used for this analysis was publically available in [WIDDE](http://widde.toulouse.inra.fr/widde/) References: Sempéré, G. et al, BMC Genomics, 2015 (https://doi.org/10.1186/s12864-015-2181-1)     
 We selected 4 populations:
-+ Population 1: ABO - Abondance
++ Population 1: ABO - Abondance,
 	Chip: Illumina BovineSNP50v1,
 	Samples: 22,
 	Project: BOVDIV,
 	References: Gautier et al, PLoS One, 2010 (https://doi.org/10.1371/journal.pone.0013038),
 	Licences: CC0
 
-+ Population 2: ANG - Angus
++ Population 2: ANG - Angus,
 	Chip: Illumina BovineSNP50v1,
 	Samples: 62,
 	Project: ILLUMINA_MD,
 	References: Matukumalli et al, PLoS One, 2009 (https://doi.org/10.1371/journal.pone.0005350),
 	Licences: CC0
 
-+ Population 3: AUB - Aubrac
++ Population 3: AUB - Aubrac,
 	Chip: Illumina BovineSNP50v1,
 	Samples: 22,
 	Project: BOVDIV,
 	References: Gautier et al, PLoS One, 2010 (https://doi.org/10.1371/journal.pone.0013038),
 	Licences: CC0
 
-+ Population 4: BPN - Bretonne Black Pied
++ Population 4: BPN - Bretonne Black Pied,
 	Chip: Illumina BovineSNP50v1,
 	Samples: 18,
 	Project: BOVDIV,
