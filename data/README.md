@@ -1,5 +1,5 @@
 ### Dataset
-The data we used for this analysis was publically available in [WIDDE](http://widde.toulouse.inra.fr/widde/)     
+The data we used for this analysis was publically available in [WIDDE](http://widde.toulouse.inra.fr/widde/) References: Sempéré, G. et al, BMC Genomics, 2015 (https://doi.org/10.1186/s12864-015-2181-1)     
 We selected 4 populations:
 + Population 1: ABO - Abondance
 	Chip: Illumina BovineSNP50v1
