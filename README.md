@@ -6,6 +6,8 @@ Runs Of Homozygosity or ROH are uninterrupted homozygous regions of the genome. 
 + [RStudio](https://posit.co/download/rstudio-desktop/)
 ### Step 1: Data management and Quality Control
 Before you even start your analysis, you have to make sure that all your datasets are in the same genome version. If not, you can use a tool like [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) to convert your files into the same genome assembly (hg19, hg38..).
+
+You also need to verify the chromosomes names in the used organism. 
 #### Quality Control
 **1- Remove heterosomes** `plink --bfile path/to/bfile --not-chr 23 24 25 26 --make-bed --out path/to/folder`        
 In fact PLINK refers to the XX chromosome as 23, YY chromosome as 24, XY Pseudo-autosomal region of X as 25, and MT Mitochondrial as 26.   
