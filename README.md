@@ -7,7 +7,7 @@ Runs Of Homozygosity or ROH are uninterrupted homozygous regions of the genome. 
 
 ## How to use this guide?
 All you need to do is clone this repository on your machine with `git clone https://github.com/NajlaAbassi/roh_analysis.git`
-Then open the Rproj file.
+Then open the Rproj file and start from there.
 
 ### Step 1: Data management and Quality Control
 Before you even start your analysis, you have to make sure that all your datasets are in the same genome version. If not, you can use a tool like [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) to convert your files into the same genome assembly (hg19, hg38..).
