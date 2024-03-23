@@ -91,7 +91,11 @@ F_roh <- function (data_path,bim_path) {
   #Min
   minimum <- min(FROH$Froh)
   # Summary table
-  sum_table <- as.data.frame(cbind(maximum,minimum,mean_value,sd_value))
+  
+  sum_table <- as.data.frame(cbind(maximum,
+                                   minimum,
+                                   mean_value,
+                                   sd_value))
   write.table(sum_table,"Froh statistics.txt", sep = "\t",col.names = T,row.names = F,quote = F)
   summary_table <- read.table("Froh statistics.txt",header = T)
   return(list(FROH_values = FROH_values, summary_table = summary_table))
