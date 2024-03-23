@@ -33,4 +33,4 @@ Incorporating functional enrichment annotation allowes to explore potential conn
 
 
 ### Contributor
-+ Najla Abassi: developer and writer
++ Najla Abassi: developer, writer and maintainer 
