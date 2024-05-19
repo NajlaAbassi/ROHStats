@@ -7,7 +7,7 @@ output:
   theme: lumen
 ---
   
-  ```{r setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
   eval = FALSE,
@@ -22,6 +22,9 @@ library("BEDMatrix")
 library("ggplot2")
 library("gridExtra")
 library("tidyverse")
+```
+
+
 # Data preprocessing and Quality Control
 
 The original data was in the .bed .bim .fam format. The first step we did is to perform QC using the following metrics:
@@ -119,7 +122,7 @@ for (pop in populations) {
     roh_islands <- rbind.data.frame(roh_islands, roh_islands_chr)
   }
 
-  # Storing the results in separate variables based on the population
+  # storing the results in separate variables based on the population
   if (pop == "1") {
     roh_islands_1 <- roh_islands
   } else if (pop == "n") {
@@ -176,7 +179,104 @@ write.xlsx(protein_table_1,"protein_table_1.xls", sheetName = "Sheet1", col.name
 write.xlsx(protein_table_n,"protein_table_n.xls", sheetName = "Sheet1", col.names = T, row.names = F, append = F)
 
 ```
-# NB: Plots, PCA, Cryptic relatedness will be added soon...
+# Generate plots
+
+## PCA
+
+```{r}
+# read in the data
+bed_file <- "/path/to/pruned_merged_data.bed"
+fam_file <- "/path/to/pop.txt" # text file with the population names (like the first column in a .fam file)
+
+# load SNP data using BEDMatrix
+snp_data <- BEDMatrix(bed_file)
+
+# read family data
+family <- read.table(fam_file)
+
+# convert SNP data to a matrix and combine with family data
+snp_matrix <- as.matrix(snp_data)
+combined_data <- cbind(family, snp_matrix)
+
+# perform PCA
+pca <- PCA(snp_matrix, graph = FALSE)
+
+# plot eigenvalues
+fviz_eig(pca)
+
+# plot individuals with their respective family labels
+pca <- fviz_pca_ind(pca, habillage = combined_data$V1, repel = TRUE)
+
+# save plot
+ggsave("pca.png", plot = pca)
+
+```
+
+## Variation of the length of ROH as a function of the number of ROH
+
+```{r}
+# list of file paths and group names
+file_paths <- list(
+  "/path/to/homozygIndiv_pop_1.hom.indiv",
+  "/path/to/homozygIndiv_pop_n.hom.indiv"
+)
+
+groups <- list(
+  "pop_1" = "Tunis",
+  "pop_n" = "Monastir"
+)
+
+# read data and add group
+read_and_label_data <- function(file, group_labels) {
+  data <- read.table(file)
+  data <- data[data$V1 %in% names(group_labels), ]
+  data$Group <- group_labels[data$V1]
+  return(data)
+}
+
+# read and label data
+data_list <- lapply(file_paths, read_and_label_data, groups)
+
+# combine all data 
+total_data <- do.call(rbind, data_list)
+
+# separate data by ethnicity
+data_arabes <- total_data[total_data$Group %in% c("Tunis", "Monastir", "Douz", "Rbaya"), ]
+data_berbers <- total_data[total_data$Group %in% c("Matmata", "Tamezret", "Zraoua", "Sened", "Tataouine", "Douiret"), ]
+
+data_arabes$ethnicity <- "non berbers"
+data_berbers$ethnicity <- "berbers"
+
+total_data <- rbind(data_arabes, data_berbers)
+
+# create plot
+create_plot <- function(data, title) {
+  ggplot(data, aes(x = V4, y = V5 / 1000)) +
+    geom_point() +
+    xlim(0, 150) +
+    ylim(0, 350) +
+    theme_classic() +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    labs(y = "Total length of ROH (Mb)", x = "Total number of ROH") +
+    ggtitle(title)
+}
+
+# create list of plots for each group
+plots <- lapply(unique(total_data$Group), function(group) {
+  data <- total_data[total_data$Group == group, ]
+  create_plot(data, group)
+})
+
+# display plots
+plot <- grid.arrange(grobs = plots, ncol = 6, nrow = 3)
+plot
+
+# save
+ggsave("plot_length_vs_number_roh.png", plot)
+
+```
+
+
 
 # Session Info {-}
 ```{r}
