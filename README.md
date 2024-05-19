@@ -4,6 +4,11 @@ Runs Of Homozygosity or ROH are uninterrupted homozygous regions of the genome. 
 ## What tools you will need?
 + [PLINK](https://www.cog-genomics.org/plink/)
 + [RStudio](https://posit.co/download/rstudio-desktop/)
+
+## How to use this guide?
+All you need to do is clone this repository on your machine with `git clone https://github.com/NajlaAbassi/roh_analysis.git`
+Then open the Rproj file and start from there.
+
 ### Step 1: Data management and Quality Control
 Before you even start your analysis, you have to make sure that all your datasets are in the same genome version. If not, you can use a tool like [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) to convert your files into the same genome assembly (hg19, hg38..).
 
@@ -28,4 +33,7 @@ Incorporating functional enrichment annotation allowes to explore potential conn
 
 
 ### Contributor
-+ Najla Abassi: developer and writer
++ Najla Abassi: developer, writer and maintainer 
+
+### Related paper
+Abassi, N. et al., 2024, Investigating Inbreeding and Ancestry Dynamics in the Tunisian Population through Runs of Homozygosity Analysis ([INSERT DOI/link to preprint])
