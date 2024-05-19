@@ -39,7 +39,6 @@ library("pheatmap")
 library("xlsx")
 ```
 
-
 # Data preprocessing and Quality Control
 
 The original data was in the .bed .bim .fam format. If your data is in .ped .map format, you should first convert it to be able to follow this guide. 
