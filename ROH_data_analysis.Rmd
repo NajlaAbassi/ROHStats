@@ -1,0 +1,181 @@
+---
+title: "Runs of Homozygosity Analysis on a sheep dataset"
+author: "Najla Abassi"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = TRUE,
+  warning = FALSE)
+```
+
+## TODO: for now keep the data so that i can test the functions, but at the end just remove and keep the pipeline (eval=F for final report)
+
+# Data preprocessing and Quality Control
+
+The original data was in the .ped .map format. The first step we performed is to convert these file into binaries .bed .bim .fam files using the following command `plink --file sheep__46819variants__58individuals --make-bed --out sheep_data`
+
+After that we performed QC using the previously discussed metrics `plink --bfile sheep_data --not-chr 23 24 25 26 --geno 0.1 --maf 0.05 --hwe 0.0001 --make-bed --out sheep_data_QC`
+
+# ROH identification
+Now we can proceed with characterizing ROH in the processed dataset. 
+
+```{r id_func}
+# call functions
+source("./R/ROH_identification_param_functions.R")
+# source(".R/functions_statictical_analysis_using_plink_outputs.R")
+#source("./R/rohi_functions.R")
+```
+
+## upload data
+
+```{r upload}
+hardy_path <- "./data/processed_data/hardy_filter.hwe"
+ni<- 58
+bim_path <- "./data/processed_data/sheep_data_QC.bim"
+
+y <- homozyg_snp(hardy_path, ni)
+x <- homozyg_density(bim_path)
+round(y,0)
+round(x,0)
+```
+
+Now we can identify ROH with the following command `plink --bfile sheep_data_QC --homozyg-window-snp 50 --homozyg-window-het 1 --homozyg-window-missing 2 --homozyg-gap 100 --homozyg-kb 500 --homozyg-density 55 --homozyg-snp 29 --out homozyg_filter`
+
+## Statistical analysis
+
+### Number of ROH and Total run length
+
+```{r nb_length_roh}
+indiv_path <- "homozyg_filter.hom.indiv"
+summary_tbl <- roh_stat(indiv_path)
+summary_tbl
+
+```
+
+### FROH
+
+```{r froh}
+data_path <-indiv_path
+froh_stat <- F_roh(data_path,bim_path)
+froh_stat
+```
+
+### FHOM
+
+```{r fhom}
+het_path <- "het_filter.het"
+fhom_stat <- F_hom(het_path)
+fhom_stat
+
+```
+
+## Genomic distribution of ROH (ROH islands)
+
+```{r rohi_func, echo=FALSE}
+
+```
+
+```{r rohi_detect}
+hom <- read.table("homozyg_filter.hom", header = TRUE)
+populations <- c("ADP", "AFS")
+roh_islands_ADP <- data.frame()
+roh_islands_AFS <- data.frame()
+
+for (pop in populations) {
+  POP <- hom[hom$FID == pop, ]
+  roh_islands <- data.frame()
+  for (chr in 1:22) {
+    roh_islands_chr <- get_RHOi(POP, chr, pop)
+    roh_islands <- rbind.data.frame(roh_islands, roh_islands_chr)
+  }
+
+  # Storing the results in separate variables based on the population
+  if (pop == "ADP") {
+    roh_islands_ADP <- roh_islands
+  } else if (pop == "AFS") {
+    roh_islands_AFS <- roh_islands
+  }
+}
+
+
+head(roh_islands_ADP)
+head(roh_islands_AFS)
+
+```
+Now we can save results as csv files
+
+```{r save_results ,eval=FALSE}
+write.table(roh_islands_ADP,"rohi_ADP.csv",quote = F, col.names = T,row.names = F, sep = ",")
+
+write.table(roh_islands_AFS,"rohi_AFS.csv",quote = F, col.names = T,row.names = F, sep = ",")
+
+```
+
+
+We saved the ROHi results in a directory called "rohi"
+
+```{r summ_by_pop}
+summary <- rohi_summ_pop("rohi")
+summary
+
+```
+
+```{r save_summary, eval=FALSE}
+write.table(summary,"summary_rohi_sheep.csv",quote = F, col.names = T,row.names = F, sep = ",")
+
+```
+
+
+## Functional Annotation
+
+```{r prot_func, echo=F}
+# these are rohproc R pacakge functions (see original package on GitHub: https://github.com/CeballosGene/rohproc)
+get_Prot<-function(DATA){
+  mart <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL",dataset="hsapiens_gene_ensembl", host="https://www.ensembl.org")
+  attributes = biomaRt::listAttributes(mart)
+  attributes <- c("ensembl_gene_id","chromosome_name","start_position","end_position",
+                  "gene_biotype","external_gene_name","description")
+  filters <- c("chromosome_name","start","end")
+  ann<-list()
+  gen<-list()
+  for (i in seq(1,length(DATA$Chr),1)){
+    ann[[i]]<-list(chromosome=DATA[i,1],start=DATA[i,2],end=DATA[i,3])
+    gen[[i]]<-biomaRt::getBM(attributes=attributes, filters=filters, values=ann[[i]], mart=mart)
+    gen[[i]]<-gen[[i]][gen[[i]]$gene_biotype=="protein_coding",]
+  }
+  genes<- plyr::ldply(gen, data.frame)
+  return(genes)
+}
+```
+
+```{r prot_char}
+library(biomaRt)
+DATA1 <- read.csv("rohi/rohi_ADP.csv")
+DATA2 <- read.csv("rohi/rohi_AFS.csv")
+protein_table_ADP <- get_Prot(DATA1)
+protein_table_AFS <- get_Prot(DATA2)
+
+head(protein_table_ADP)
+head(protein_table_AFS)
+
+```
+
+```{r save_prot_results, eval=FALSE}
+library("xlsx")
+write.xlsx(protein_table_ADP,"protein_table_ADP.xls", sheetName = "Sheet1", col.names = T, row.names = F, append = F)
+
+write.xlsx(protein_table_AFS,"protein_table_AFS.xls", sheetName = "Sheet1", col.names = T, row.names = F, append = F)
+
+```
+# NB: Plots, PCA, Cryptic relatedness will be added soon...
+
+# Session Info {-}
+```{r}
+sessionInfo()
+```
+
+
