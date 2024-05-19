@@ -1,5 +1,5 @@
 ---
-  title: "Runs of Homozygosity Analysis on a sheep dataset"
+title: "Runs of Homozygosity Analysis on a sheep dataset"
 author: "Najla Abassi"
 date: "`r Sys.Date()`"
 output:
@@ -24,6 +24,7 @@ library("gridExtra")
 library("tidyverse")
 library("reshape2")
 library("pheatmap")
+library("xlsx")
 ```
 
 
@@ -112,9 +113,10 @@ FHOM_stat
 
 ```{r rohi_detect}
 hom <- read.table("/path/to/homozyg_filter.hom", header = TRUE)
-populations <- c("list all population names as vector")
-roh_islands_1 <- data.frame()
-roh_islands_n <- data.frame() # we create for each population an empty dataframe; here we show the example for 2 populations
+populations <- c("Tunis", "Monastir", "Douz", "Rbaya", "Matmata", "Tamezret", "Zraoua", "Douiret", "Tataouine", "Sened")
+roh_islands <- lapply(populations, function(loc) {
+  assign(paste0("roh_islands_", loc), data.frame(), envir = .GlobalEnv)
+})
 
 for (pop in populations) {
   POP <- hom[hom$FID == pop, ]
@@ -125,32 +127,47 @@ for (pop in populations) {
   }
 
   # storing the results in separate variables based on the population
-  if (pop == "1") {
-    roh_islands_1 <- roh_islands
-  } else if (pop == "n") {
-    roh_islands_n <- roh_islands
-  } 
+  if (pop == "Tunis") {
+    roh_islands_Tunis <- roh_islands
+  } else if (pop == "Monastir") {
+    roh_islands_Monastir <- roh_islands
+  } else if (pop == "Douz") {
+    roh_islands_Douz <- roh_islands
+  } else if (pop == "Rbaya") {
+    roh_islands_Rbaya <- roh_islands
+  } else if (pop == "Matmata") {
+    roh_islands_Matmata <- roh_islands
+  } else if (pop == "Tamezret") {
+    roh_islands_Tamezret <- roh_islands
+  } else if (pop == "Zraoua") {
+    roh_islands_Zraoua <- roh_islands
+  } else if (pop == "Douiret") {
+    roh_islands_Douiret <- roh_islands
+  } else if (pop == "Tataouine") {
+    roh_islands_Tataouine <- roh_islands
+  } else if (pop == "Sened") {
+    roh_islands_Sened <- roh_islands
+  }
 }
 
-
-head(roh_islands_1)
-head(roh_islands_n)
+head(get(paste0("roh_islands_", pop)))
 
 ```
 
 Now we can save results as csv files
 
 ```{r save_results}
-write.table(roh_islands_1,"rohi_1.csv",quote = F, col.names = T,row.names = F, sep = ",")
-
-write.table(roh_islands_n,"rohi_n.csv",quote = F, col.names = T,row.names = F, sep = ",")
-
+# save all 
+for (pop in populations) {
+  filename <- paste0("roh_islands_", pop, ".csv")
+  write.csv(get(paste0("roh_islands_", pop)), file = filename, row.names = FALSE)
+}
 ```
 
 We saved the ROHi results in a directory called "rohi"
 
 ```{r summ_by_pop}
-summary <- rohi_summ_pop("rohi")
+summary <- rohi_summ_pop("rohi") # point out where the ROHi results for each group are stored
 summary
 
 ```
@@ -164,22 +181,29 @@ write.table(summary,"summary_rohi.csv",quote = F, col.names = T,row.names = F, s
 
 ```{r prot_char}
 library(biomaRt)
-DATA1 <- read.csv("/path/to/rohi/rohi_1.csv")
-DATA2 <- read.csv("/path/to/rohi/rohi_n.csv")
-protein_table_1 <- get_Prot(DATA1)
-protein_table_n <- get_Prot(DATA2)
+DATA1 <- read.csv("/path/to/rohi/rohi_Tunis.csv")
+DATA2 <- read.csv("/path/to/rohi/rohi_Monastir.csv")
 
-head(protein_table_1)
-head(protein_table_n)
+for (pop in populations) {
+  filename <- paste0("/path/to/rohi/rohi_", pop, ".csv")
+  data_list[[pop]] <- read.csv(filename)
+}
+
+protein_tables <- lapply(data_list, get_Prot)
+
+indices <- which(sapply(protein_tables, is.data.frame))
+for (i in indices) {
+  cat( i, ":\n")
+  head(protein_tables[[i]])
+}
 
 ```
 
 ```{r save_prot_results}
-library("xlsx")
-write.xlsx(protein_table_1,"protein_table_1.xls", sheetName = "Sheet1", col.names = T, row.names = F, append = F)
-
-write.xlsx(protein_table_n,"protein_table_n.xls", sheetName = "Sheet1", col.names = T, row.names = F, append = F)
-
+# save all
+sapply(which(sapply(protein_tables, is.data.frame)), function(i) {
+  write.xlsx(protein_tables[[i]], file = paste0("protein_table_", i, ".xlsx"), sheetName = "Sheet1", col.names = T, row.names = F, append = F)
+})
 ```
 # Generate plots
 
@@ -219,13 +243,29 @@ ggsave("pca.png", plot = pca)
 ```{r}
 # list of file paths and group names
 file_paths <- list(
-  "/path/to/homozygIndiv_pop_1.hom.indiv",
-  "/path/to/homozygIndiv_pop_n.hom.indiv"
+  "/path/to/homozygIndiv_pop_Tunis.hom.indiv",
+  "/path/to/homozygIndiv_pop_Monastir.hom.indiv",
+  "/path/to/homozygIndiv_pop_Douz.hom.indiv",
+  "/path/to/homozygIndiv_pop_Rbaya.hom.indiv",
+  "/path/to/homozygIndiv_pop_Matmata.hom.indiv",
+  "/path/to/homozygIndiv_pop_Tamezret.hom.indiv",
+  "/path/to/homozygIndiv_pop_Zraoua.hom.indiv",
+  "/path/to/homozygIndiv_pop_Douiret.hom.indiv",
+  "/path/to/homozygIndiv_pop_Tataouine.hom.indiv",
+  "/path/to/homozygIndiv_pop_Sened.hom.indiv"
 )
 
 groups <- list(
-  "pop_1" = "Tunis",
-  "pop_n" = "Monastir"
+  "Tunis",
+  "Monastir",
+  "Douz",
+  "Rbaya",
+  "Matmata",
+  "Tamezret",
+  "Zraoua",
+  "Douiret",
+  "Tataouine",
+  "Sened"
 )
 
 # read data and add group
@@ -302,10 +342,35 @@ hm <- pheatmap(as.data.frame(myM))
 ggsave("heatmap_pihat.png", hm)
 ```
 
+##  Mean total length of ROH per tunisian group per category/ ROH class
+
+```{r}
+mean_length <- read.table("/path/to/mean_total_length_per_category.txt", sep = "\t", header = TRUE) # a text file where we store the mean total length of ROH in each category for each group
+head(mean_length)
+
+tn_shapes <- c(0,12,20,3,4,13,6,7,1,9)
+
+Groups <- mean_length$ID
+
+bar_plot <- ggplot(mean_length, aes(x = mean_length$Class, y=mean_length$Mean.cumulative.length.of.ROH..Kb., color= Groups, group = Groups, shape = Groups)) +
+  geom_point(size = 2, stroke = 0.8)+
+  geom_line(size = 0.6)+
+  ylab("Mean total length of ROH per group (Mb)") + 
+  xlab("ROH length Class (Mb)")+
+  theme_classic()+
+  scale_shape_manual(values = tn_shapes)+
+  scale_color_manual(values = c( "Sened" ="#FF69B4", "Tataouine"= "blueviolet","Douiret" = "cyan","Matmata"="#FFD700","Tamezret"="blue","Zraoua"="black","Douz"="darkorange", "Rbaya"= "green","Tunis"="#8FBC8F", "Monastir"= "red"))
+
+bar_plot
+
+# save
+ggsave("roh_categories_bar_plot.png", bar_plot)
+
+```
 
 
 # Session Info {-}
-```{r}
+```{r eval=TRUE}
 sessionInfo()
 ```
 
