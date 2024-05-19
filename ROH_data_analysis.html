@@ -366,7 +366,8 @@ library(&quot;ggplot2&quot;)
 library(&quot;gridExtra&quot;)
 library(&quot;tidyverse&quot;)
 library(&quot;reshape2&quot;)
-library(&quot;pheatmap&quot;)</code></pre>
+library(&quot;pheatmap&quot;)
+library(&quot;xlsx&quot;)</code></pre>
 <div id="data-preprocessing-and-quality-control" class="section level1">
 <h1>Data preprocessing and Quality Control</h1>
 <p>The original data was in the .bed .bim .fam format. The first step we
@@ -431,9 +432,10 @@ FHOM_stat</code></pre>
 <div id="genomic-distribution-of-roh-roh-islands" class="section level2">
 <h2>Genomic distribution of ROH (ROH islands)</h2>
 <pre class="r"><code>hom &lt;- read.table(&quot;/path/to/homozyg_filter.hom&quot;, header = TRUE)
-populations &lt;- c(&quot;list all population names as vector&quot;)
-roh_islands_1 &lt;- data.frame()
-roh_islands_n &lt;- data.frame() # we create for each population an empty dataframe; here we show the example for 2 populations
+populations &lt;- c(&quot;Tunis&quot;, &quot;Monastir&quot;, &quot;Douz&quot;, &quot;Rbaya&quot;, &quot;Matmata&quot;, &quot;Tamezret&quot;, &quot;Zraoua&quot;, &quot;Douiret&quot;, &quot;Tataouine&quot;, &quot;Sened&quot;)
+roh_islands &lt;- lapply(populations, function(loc) {
+  assign(paste0(&quot;roh_islands_&quot;, loc), data.frame(), envir = .GlobalEnv)
+})
 
 for (pop in populations) {
   POP &lt;- hom[hom$FID == pop, ]
@@ -444,39 +446,63 @@ for (pop in populations) {
   }
 
   # storing the results in separate variables based on the population
-  if (pop == &quot;1&quot;) {
-    roh_islands_1 &lt;- roh_islands
-  } else if (pop == &quot;n&quot;) {
-    roh_islands_n &lt;- roh_islands
-  } 
+  if (pop == &quot;Tunis&quot;) {
+    roh_islands_Tunis &lt;- roh_islands
+  } else if (pop == &quot;Monastir&quot;) {
+    roh_islands_Monastir &lt;- roh_islands
+  } else if (pop == &quot;Douz&quot;) {
+    roh_islands_Douz &lt;- roh_islands
+  } else if (pop == &quot;Rbaya&quot;) {
+    roh_islands_Rbaya &lt;- roh_islands
+  } else if (pop == &quot;Matmata&quot;) {
+    roh_islands_Matmata &lt;- roh_islands
+  } else if (pop == &quot;Tamezret&quot;) {
+    roh_islands_Tamezret &lt;- roh_islands
+  } else if (pop == &quot;Zraoua&quot;) {
+    roh_islands_Zraoua &lt;- roh_islands
+  } else if (pop == &quot;Douiret&quot;) {
+    roh_islands_Douiret &lt;- roh_islands
+  } else if (pop == &quot;Tataouine&quot;) {
+    roh_islands_Tataouine &lt;- roh_islands
+  } else if (pop == &quot;Sened&quot;) {
+    roh_islands_Sened &lt;- roh_islands
+  }
 }
 
-
-head(roh_islands_1)
-head(roh_islands_n)</code></pre>
+head(get(paste0(&quot;roh_islands_&quot;, pop)))</code></pre>
 <p>Now we can save results as csv files</p>
-<pre class="r"><code>write.table(roh_islands_1,&quot;rohi_1.csv&quot;,quote = F, col.names = T,row.names = F, sep = &quot;,&quot;)
-
-write.table(roh_islands_n,&quot;rohi_n.csv&quot;,quote = F, col.names = T,row.names = F, sep = &quot;,&quot;)</code></pre>
+<pre class="r"><code># save all 
+for (pop in populations) {
+  filename &lt;- paste0(&quot;roh_islands_&quot;, pop, &quot;.csv&quot;)
+  write.csv(get(paste0(&quot;roh_islands_&quot;, pop)), file = filename, row.names = FALSE)
+}</code></pre>
 <p>We saved the ROHi results in a directory called “rohi”</p>
-<pre class="r"><code>summary &lt;- rohi_summ_pop(&quot;rohi&quot;)
+<pre class="r"><code>summary &lt;- rohi_summ_pop(&quot;rohi&quot;) # point out where the ROHi results for each group are stored
 summary</code></pre>
 <pre class="r"><code>write.table(summary,&quot;summary_rohi.csv&quot;,quote = F, col.names = T,row.names = F, sep = &quot;,&quot;)</code></pre>
 </div>
 <div id="functional-annotation" class="section level2">
 <h2>Functional Annotation</h2>
 <pre class="r"><code>library(biomaRt)
-DATA1 &lt;- read.csv(&quot;/path/to/rohi/rohi_1.csv&quot;)
-DATA2 &lt;- read.csv(&quot;/path/to/rohi/rohi_n.csv&quot;)
-protein_table_1 &lt;- get_Prot(DATA1)
-protein_table_n &lt;- get_Prot(DATA2)
+DATA1 &lt;- read.csv(&quot;/path/to/rohi/rohi_Tunis.csv&quot;)
+DATA2 &lt;- read.csv(&quot;/path/to/rohi/rohi_Monastir.csv&quot;)
 
-head(protein_table_1)
-head(protein_table_n)</code></pre>
-<pre class="r"><code>library(&quot;xlsx&quot;)
-write.xlsx(protein_table_1,&quot;protein_table_1.xls&quot;, sheetName = &quot;Sheet1&quot;, col.names = T, row.names = F, append = F)
+for (pop in populations) {
+  filename &lt;- paste0(&quot;/path/to/rohi/rohi_&quot;, pop, &quot;.csv&quot;)
+  data_list[[pop]] &lt;- read.csv(filename)
+}
 
-write.xlsx(protein_table_n,&quot;protein_table_n.xls&quot;, sheetName = &quot;Sheet1&quot;, col.names = T, row.names = F, append = F)</code></pre>
+protein_tables &lt;- lapply(data_list, get_Prot)
+
+indices &lt;- which(sapply(protein_tables, is.data.frame))
+for (i in indices) {
+  cat( i, &quot;:\n&quot;)
+  head(protein_tables[[i]])
+}</code></pre>
+<pre class="r"><code># save all
+sapply(which(sapply(protein_tables, is.data.frame)), function(i) {
+  write.xlsx(protein_tables[[i]], file = paste0(&quot;protein_table_&quot;, i, &quot;.xlsx&quot;), sheetName = &quot;Sheet1&quot;, col.names = T, row.names = F, append = F)
+})</code></pre>
 </div>
 </div>
 <div id="generate-plots" class="section level1">
@@ -514,13 +540,29 @@ ggsave(&quot;pca.png&quot;, plot = pca)</code></pre>
 ROH</h2>
 <pre class="r"><code># list of file paths and group names
 file_paths &lt;- list(
-  &quot;/path/to/homozygIndiv_pop_1.hom.indiv&quot;,
-  &quot;/path/to/homozygIndiv_pop_n.hom.indiv&quot;
+  &quot;/path/to/homozygIndiv_pop_Tunis.hom.indiv&quot;,
+  &quot;/path/to/homozygIndiv_pop_Monastir.hom.indiv&quot;,
+  &quot;/path/to/homozygIndiv_pop_Douz.hom.indiv&quot;,
+  &quot;/path/to/homozygIndiv_pop_Rbaya.hom.indiv&quot;,
+  &quot;/path/to/homozygIndiv_pop_Matmata.hom.indiv&quot;,
+  &quot;/path/to/homozygIndiv_pop_Tamezret.hom.indiv&quot;,
+  &quot;/path/to/homozygIndiv_pop_Zraoua.hom.indiv&quot;,
+  &quot;/path/to/homozygIndiv_pop_Douiret.hom.indiv&quot;,
+  &quot;/path/to/homozygIndiv_pop_Tataouine.hom.indiv&quot;,
+  &quot;/path/to/homozygIndiv_pop_Sened.hom.indiv&quot;
 )
 
 groups &lt;- list(
-  &quot;pop_1&quot; = &quot;Tunis&quot;,
-  &quot;pop_n&quot; = &quot;Monastir&quot;
+  &quot;Tunis&quot;,
+  &quot;Monastir&quot;,
+  &quot;Douz&quot;,
+  &quot;Rbaya&quot;,
+  &quot;Matmata&quot;,
+  &quot;Tamezret&quot;,
+  &quot;Zraoua&quot;,
+  &quot;Douiret&quot;,
+  &quot;Tataouine&quot;,
+  &quot;Sened&quot;
 )
 
 # read data and add group
@@ -592,6 +634,30 @@ hm &lt;- pheatmap(as.data.frame(myM))
 
 # save
 ggsave(&quot;heatmap_pihat.png&quot;, hm)</code></pre>
+</div>
+<div id="mean-total-length-of-roh-per-tunisian-group-per-category-roh-class" class="section level2">
+<h2>Mean total length of ROH per tunisian group per category/ ROH
+class</h2>
+<pre class="r"><code>mean_length &lt;- read.table(&quot;/path/to/mean_total_length_per_category.txt&quot;, sep = &quot;\t&quot;, header = TRUE) # a text file where we store the mean total length of ROH in each category for each group
+head(mean_length)
+
+tn_shapes &lt;- c(0,12,20,3,4,13,6,7,1,9)
+
+Groups &lt;- mean_length$ID
+
+bar_plot &lt;- ggplot(mean_length, aes(x = mean_length$Class, y=mean_length$Mean.cumulative.length.of.ROH..Kb., color= Groups, group = Groups, shape = Groups)) +
+  geom_point(size = 2, stroke = 0.8)+
+  geom_line(size = 0.6)+
+  ylab(&quot;Mean total length of ROH per group (Mb)&quot;) + 
+  xlab(&quot;ROH length Class (Mb)&quot;)+
+  theme_classic()+
+  scale_shape_manual(values = tn_shapes)+
+  scale_color_manual(values = c( &quot;Sened&quot; =&quot;#FF69B4&quot;, &quot;Tataouine&quot;= &quot;blueviolet&quot;,&quot;Douiret&quot; = &quot;cyan&quot;,&quot;Matmata&quot;=&quot;#FFD700&quot;,&quot;Tamezret&quot;=&quot;blue&quot;,&quot;Zraoua&quot;=&quot;black&quot;,&quot;Douz&quot;=&quot;darkorange&quot;, &quot;Rbaya&quot;= &quot;green&quot;,&quot;Tunis&quot;=&quot;#8FBC8F&quot;, &quot;Monastir&quot;= &quot;red&quot;))
+
+bar_plot
+
+# save
+ggsave(&quot;roh_categories_bar_plot.png&quot;, bar_plot)</code></pre>
 </div>
 </div>
 <div id="session-info" class="section level1 unnumbered">
