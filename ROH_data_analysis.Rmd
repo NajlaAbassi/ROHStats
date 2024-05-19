@@ -22,6 +22,8 @@ library("BEDMatrix")
 library("ggplot2")
 library("gridExtra")
 library("tidyverse")
+library("reshape2")
+library("pheatmap")
 ```
 
 
@@ -274,6 +276,30 @@ plot
 # save
 ggsave("plot_length_vs_number_roh.png", plot)
 
+```
+
+## Heatmap for cryptic relatedness
+
+```{r}
+data_genome <- read.table("/path/to/IBD_report.genome",header = T)
+
+df1 <- data_genome[,c("IID1","IID2","PI_HAT")]
+
+# convert long-to-wide
+x <- dcast(df1, IID1 ~ IID2, value.var = "PI_HAT")
+
+# convert to matrix with column and rownames
+myM <- as.matrix(x[ , -1 ])
+row.names(myM) <- x$IID1
+
+# convert all NAs to 0
+myM[ is.na(myM) ] <- 0
+
+# plot heatmap
+hm <- pheatmap(as.data.frame(myM))
+
+# save
+ggsave("heatmap_pihat.png", hm)
 ```
 
 
