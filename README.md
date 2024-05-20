@@ -21,7 +21,7 @@ In fact PLINK refers to the XX chromosome as 23, YY chromosome as 24, XY Pseudo-
 PLINK is based on the principle of a sliding window of X SNPs that traverses the entire genome to show homozygotes over a certain minimum length. THe following command can be used to call ROH:   
 `--homozyg-window-snp 50 --homozyg-window-het 1 --homozyg-window-missing 2 --homozyg-gap 100 --homozyg-kb 500 --homozyg-density x --homozyg-snp y`, where x and y are respectively determined using the functions *homozyg_density()*  and *homozyg_snp()*  
 ### Step 3: Statistical analysis
-After identifying ROH in your sample, you can now estimate homozygosity mesures:   
+After identifying ROH in your sample, you can now estimate homozygosity measures:   
 + Number of ROH
 + Total run length
 + FROH
