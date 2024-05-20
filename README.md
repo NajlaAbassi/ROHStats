@@ -33,7 +33,7 @@ Incorporating functional enrichment annotation allowes to explore potential conn
 
 
 ### Contributor
-+ Najla Abassi: developer, writer and maintainer 
++ Najla Abassi: author and maintainer 
 
 ### Related paper
 Abassi, N. et al., 2024, Investigating Inbreeding and Ancestry Dynamics in the Tunisian Population through Runs of Homozygosity Analysis ([INSERT DOI/link to preprint])
