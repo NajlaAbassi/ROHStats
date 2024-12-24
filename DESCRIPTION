@@ -8,4 +8,6 @@ Description: ROHtools provides a set of tool to streamline the analysis and visu
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
+Imports:
+    rohproc
