@@ -10,4 +10,10 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports:
-    rohproc
+    rohproc,
+    BEDMatrix,
+    FactoMineR,
+    factoextra,
+    ggplot2,
+    gridExtra,
+    reshape2
