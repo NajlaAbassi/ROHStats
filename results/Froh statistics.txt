@@ -1,2 +1,0 @@
-maximum	minimum	mean_value	sd_value
-0.0318599020916778	0	0.01	0.01

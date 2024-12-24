@@ -1,0 +1,24 @@
+PLINK v1.90b6.26 64-bit (2 Apr 2022)
+Options in effect:
+  --bfile sheep_data_QC
+  --het
+  --out het_filter
+
+Hostname: DESKTOP-L9A6F6A
+Working directory: C:\Users\Lenovo\Desktop\github_repo_roh
+Start time: Sun Jan 21 15:06:55 2024
+
+Random number seed: 1705846015
+16167 MB RAM detected; reserving 8083 MB for main workspace.
+40737 variants loaded from .bim file.
+58 people (0 males, 0 females, 58 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to het_filter.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 58 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.999606.
+40737 variants and 58 people pass filters and QC.
+Note: No phenotypes present.
+--het: 40737 variants scanned, report written to het_filter.het .
+
+End time: Sun Jan 21 15:06:55 2024

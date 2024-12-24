@@ -1,0 +1,2 @@
+maximum	minimum	mean_value	sd_value
+46	0	11.21	10.12
