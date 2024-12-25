@@ -18,3 +18,17 @@ PLINK output}
 roh_stat
 roh_stat() performs basic statistics on the number and the length of ROH
 }
+\examples{
+# Create a toy dataset
+toy_data <- data.frame(
+  KB = c(1500, 2500, 4000, 1000, 3000),
+  NSEG = c(2, 4, 6, 1, 3)
+)
+# Write the dataset to a temporary file
+toy_file <- tempfile(fileext = ".txt")
+write.table(toy_data, file = toy_file, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
+
+# Run roh_stat()
+roh_stat(toy_file)
+
+}
