@@ -1,10 +1,10 @@
-Package: ROHtools
+Package: ROHStats
 Title: An R package for Runs of Homozygosity analysis
 Version: 0.0.0.9000
 Authors@R: 
     person("Najla", "Abassi", , "abassi.nejla96@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8357-0938"))
-Description: ROHtools provides a set of tool to streamline the analysis and visualization of Runs of Homozygosity (ROH) from PLINK output.
+Description: ROHStats provides a set of tool to streamline the analysis and visualization of Runs of Homozygosity (ROH) from PLINK output.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -16,4 +16,11 @@ Imports:
     factoextra,
     ggplot2,
     gridExtra,
-    reshape2
+    reshape2,
+    pheatmap
+Suggests:
+    knitr,
+    rmarkdown
+URL: https://github.com/NajlaAbassi/ROHStats
+BugReports: https://github.com/NajlaAbassi/ROHStats/issues
+VignetteBuilder: knitr
