@@ -1,6 +1,8 @@
 #' relatedness_hm
 #'
 #' @param data_path A character strings indicating the paths to the .genome file
+#' @param output_dir A character strings indicating the output directory name.
+#' If not indicated it will be "figures/" by default
 #'
 #' @return A heatmap for cryptic relatedness
 #' @export

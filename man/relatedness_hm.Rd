@@ -8,6 +8,9 @@ relatedness_hm(data_path, output_dir = "figures/")
 }
 \arguments{
 \item{data_path}{A character strings indicating the paths to the .genome file}
+
+\item{output_dir}{A character strings indicating the output directory name.
+If not indicated it will be "figures/" by default}
 }
 \value{
 A heatmap for cryptic relatedness
