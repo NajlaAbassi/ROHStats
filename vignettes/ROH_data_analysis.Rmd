@@ -10,6 +10,11 @@ output:
     toc_float: true
     number_sections: true
     theme: lumen
+vignette: >
+  %\VignetteIndexEntry{ROH_data_analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{ROHStats}
 ---
   
 ```{r setup, include=FALSE}
