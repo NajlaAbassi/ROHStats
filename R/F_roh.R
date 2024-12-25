@@ -60,8 +60,8 @@ F_roh <- function(data_path,coverage) {
                                    minimum,
                                    mean_value,
                                    sd_value))
-  write.table(sum_table,"Froh statistics.txt", sep = "\t",col.names = T,
+  write.table(sum_table,"Froh_statistics.txt", sep = "\t",col.names = T,
               row.names = F,quote = F)
-  summary_table <- read.table("Froh statistics.txt",header = T)
+  summary_table <- read.table("Froh_statistics.txt",header = T)
   return(list(FROH_values = FROH_values, summary_table = summary_table))
 }

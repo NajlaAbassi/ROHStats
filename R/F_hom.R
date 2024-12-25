@@ -34,8 +34,8 @@ F_hom <- function(het_path) {
   minimum <- min(FHOM$Fhom)
   # Summary table
   sum_table <- as.data.frame(cbind(maximum,minimum,mean_value,sd_value))
-  write.table(sum_table,"Fhom statistics.txt", sep = "\t",col.names = T,row.names = F,quote = F)
-  summary_table <- read.table("Fhom statistics.txt",header = T)
+  write.table(sum_table,"Fhom_statistics.txt", sep = "\t",col.names = T,row.names = F,quote = F)
+  summary_table <- read.table("Fhom_statistics.txt",header = T)
   return(list(FHOM_values = FHOM_values, summary_table = summary_table))
 }
 

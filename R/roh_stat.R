@@ -22,9 +22,9 @@ roh_stat <- function(indiv_path) {
   # Summary table
   sum_table_1 <- as.data.frame(cbind(maximum,minimum,mean_value,sd_value))
   rownames(sum_table_1)[1] <- "total length"
-  write.table(sum_table_1,"total length statistics.txt", sep = "\t",
+  write.table(sum_table_1,"total_length_statistics.txt", sep = "\t",
               col.names = T,row.names = F,quote = F)
-  summary_table_1 <- read.table("total length statistics.txt",header = T)
+  summary_table_1 <- read.table("total_length_statistics.txt",header = T)
   ######## number of ROH per individual##########
   #Maximum
   maximum <- round(max(dataset$NSEG, na.rm = TRUE),2)
@@ -37,9 +37,9 @@ roh_stat <- function(indiv_path) {
   # Summary table
   sum_table_2 <- as.data.frame(cbind(maximum,minimum,mean_value,sd_value))
   rownames(sum_table_2)[1] <- "total number"
-  write.table(sum_table_2,"mean total length statistics.txt", sep = "\t",
+  write.table(sum_table_2,"mean_total_length_statistics.txt", sep = "\t",
               col.names = T,row.names = F,quote = F)
-  summary_table_2 <- read.table("mean total length statistics.txt",header = T)
+  summary_table_2 <- read.table("mean_total_length_statistics.txt",header = T)
   common_col_names <- intersect(names(summary_table_1), names(summary_table_2))
   # Summary table
   summary_table <- merge(summary_table_1, summary_table_2,
