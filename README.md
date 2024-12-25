@@ -6,7 +6,7 @@ The aim of ROHStats is to analyze and visualize Runs of Homozygosity (ROH) from 
 
 You can install the development version of ROHStats from GitHub with:
 
-```
+``` r
 library("remotes")
 remotes::install_github("NajlaAbassi/ROHStats", 
                         dependencies = TRUE, build_vignettes = TRUE)
