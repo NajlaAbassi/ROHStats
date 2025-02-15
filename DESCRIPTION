@@ -21,6 +21,9 @@ Imports:
 Suggests:
     knitr,
     rmarkdown
+biocViews:
+    SNP, GWAS, Software, Visualization, StatisticalMethod,
+    DataImport, Genetics
 URL: https://github.com/NajlaAbassi/ROHStats
 BugReports: https://github.com/NajlaAbassi/ROHStats/issues
 VignetteBuilder: knitr
