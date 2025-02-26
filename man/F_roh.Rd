@@ -12,12 +12,14 @@ F_roh(data_path, coverage)
 PLINK output}
 
 \item{coverage}{A character string indicating the path of the .bim file,
-used to calculate the genome coverage. If the genome size is known
-it is possible to enter it as a numeric value}
+used to calculate the genome coverage. It is assumed that you have 22 chromosome in this case.
+If the genome size is known it is possible to enter it as a numeric value}
 }
 \value{
-2 dataframe. The 1st having FROH values and the 2nd having elementary
-statistics of FROH
+@return A list, containing:
+\item{FROH_values}{A data frame with FID, IID, and Froh values}
+\item{Froh_summary_table}{A data frame with overall Froh summary statistics (Maximum, Minimum, Mean, SD)}
+\item{by_population_Froh_stats}{A data frame with per population Froh summary statistics (Maximum, Minimum, Mean, SD)}
 }
 \description{
 F_roh

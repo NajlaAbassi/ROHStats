@@ -12,8 +12,8 @@ F_hom(het_path)
 \value{
 A list, containing:
 \item{FHOM_values}{A data frame with FID, IID, and Fhom values}
-\item{summary_table}{A data frame with overall summary statistics (Maximum, Minimum, Mean, SD)}
-\item{by_population_stats}{A data frame with per population summary statistics (Maximum, Minimum, Mean, SD)}
+\item{Fhom_summary_table}{A data frame with overall Fhom summary statistics (Maximum, Minimum, Mean, SD)}
+\item{by_population_Fhom_summary}{A data frame with per population Fhom summary statistics (Maximum, Minimum, Mean, SD)}
 }
 \description{
 F_hom: calculates FHOM and reports basic statistics
