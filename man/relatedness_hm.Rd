@@ -17,3 +17,6 @@ A heatmap for cryptic relatedness
 \description{
 relatedness_hm
 }
+\examples{
+TODO example
+}
