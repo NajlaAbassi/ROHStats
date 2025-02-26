@@ -4,8 +4,8 @@
 #'
 #' @return A list, containing:
 #'  \item{FHOM_values}{A data frame with FID, IID, and Fhom values}
-#'  \item{summary_table}{A data frame with overall summary statistics (Maximum, Minimum, Mean, SD)}
-#'  \item{by_population_stats}{A data frame with per population summary statistics (Maximum, Minimum, Mean, SD)}
+#'  \item{Fhom_summary_table}{A data frame with overall Fhom summary statistics (Maximum, Minimum, Mean, SD)}
+#'  \item{by_population_Fhom_summary}{A data frame with per population Fhom summary statistics (Maximum, Minimum, Mean, SD)}
 #' @export
 #' 
 #' @import dplyr
@@ -47,7 +47,7 @@ F_hom <- function(het_path) {
   # standard deviation
   sd_value <- round(sd(FHOM$Fhom, na.rm = TRUE),2)
   
-  summary_table <- data.frame(
+  Fhom_summary_table <- data.frame(
     Maximum = maximum,
     Minimum = minimum,
     Mean = mean_value,
@@ -55,7 +55,7 @@ F_hom <- function(het_path) {
   )
   
   # compute statistics by population
-  by_population_stats <- FHOM %>%
+  by_population_Fhom_summary <- FHOM %>%
     group_by(FID) %>%
     summarise(
       Maximum = max(Fhom, na.rm = TRUE),
@@ -69,7 +69,7 @@ F_hom <- function(het_path) {
   
   # return output as a list
   return(list(FHOM_values = FHOM,
-              summary_table = summary_table,
-              by_population_summary = by_population_stats))
+              Fhom_summary_table = Fhom_summary_table,
+              by_population_Fhom_summary = by_population_Fhom_summary))
 }
 
