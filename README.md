@@ -1,6 +1,6 @@
 # ROHStats
 
-The aim of ROHStats is to analyze and visualize Runs of Homozygosity (ROH) from PLINK output.
+The aim of ROHStats is to streamline the analysis and visualization of Runs of Homozygosity (ROH) from PLINK output.
 
 ## Installation
 
