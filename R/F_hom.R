@@ -7,6 +7,8 @@
 #'  \item{summary_table}{A data frame with overall summary statistics (Maximum, Minimum, Mean, SD)}
 #'  \item{by_population_stats}{A data frame with per population summary statistics (Maximum, Minimum, Mean, SD)}
 #' @export
+#' 
+#' @import dplyr
 #'
 #' @examples
 #' # simulating a sample PLINK .het dataset
