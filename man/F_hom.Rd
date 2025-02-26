@@ -2,7 +2,7 @@
 % Please edit documentation in R/F_hom.R
 \name{F_hom}
 \alias{F_hom}
-\title{This function calculates FHOM and give basic statistics}
+\title{F_hom: calculates FHOM and reports basic statistics}
 \usage{
 F_hom(het_path)
 }
@@ -10,12 +10,34 @@ F_hom(het_path)
 \item{het_path}{A character string indicating the path of the .het PLINK output}
 }
 \value{
-2 dataframe; the 1st having FHOM values and the 2nd having elementary statistics of FHOM
-Title
-
-2 dataframe. The 1st having FHOM values and the 2nd having elementary
-statistics of FHOM
+A list, containing:
+\item{FHOM_values}{A data frame with FID, IID, and Fhom values}
+\item{summary_table}{A data frame with overall summary statistics (Maximum, Minimum, Mean, SD)}
+\item{by_population_stats}{A data frame with per population summary statistics (Maximum, Minimum, Mean, SD)}
 }
 \description{
-This function calculates FHOM and give basic statistics
+F_hom: calculates FHOM and reports basic statistics
+}
+\examples{
+# simulating a sample PLINK .het dataset
+sample_data <- data.frame(
+  FID = c("FAM001", "FAM002", "FAM003"),
+  IID = c("ID001", "ID002", "ID003"),
+  O_HOM = c(50, 30, 40),
+  E_HOM = c(45, 32, 38),
+  N_NM = c(100, 100, 100),
+  F = c(0.05, -0.02, 0.08)
+)
+
+# save sample data to a temporary file?
+temp_file <- tempfile(fileext = ".het")
+write.table(sample_data, temp_file, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
+
+# run F_hom on the simulated data
+result <- F_hom(temp_file)
+
+# access results
+result$FHOM_values
+result$summary_table
+
 }

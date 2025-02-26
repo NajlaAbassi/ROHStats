@@ -4,13 +4,12 @@
 \alias{relatedness_hm}
 \title{relatedness_hm}
 \usage{
-relatedness_hm(data_path, output_dir = "figures/")
+relatedness_hm(data_path, ...)
 }
 \arguments{
 \item{data_path}{A character strings indicating the paths to the .genome file}
 
-\item{output_dir}{A character strings indicating the output directory name.
-If not indicated it will be "figures/" by default}
+\item{...}{Additional arguments for pheatmap()}
 }
 \value{
 A heatmap for cryptic relatedness
