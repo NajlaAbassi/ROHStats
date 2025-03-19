@@ -12,6 +12,7 @@ RoxygenNote: 7.3.2
 Imports:
     rohproc,
     dplyr,
+    tidyr,
     BEDMatrix,
     FactoMineR,
     factoextra,
@@ -21,10 +22,12 @@ Imports:
     pheatmap
 Suggests:
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 biocViews:
     SNP, GWAS, Software, Visualization, StatisticalMethod,
     DataImport, Genetics
 URL: https://github.com/NajlaAbassi/ROHStats
 BugReports: https://github.com/NajlaAbassi/ROHStats/issues
 VignetteBuilder: knitr
+Config/testthat/edition: 3
