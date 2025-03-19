@@ -6,18 +6,11 @@
 #' @return 1 dataframe with elementary statistics
 #' @export
 #'
-#' @examples
-#' # Create a toy dataset
-#' toy_data <- data.frame(
-#'   KB = c(1500, 2500, 4000, 1000, 3000),
-#'   NSEG = c(2, 4, 6, 1, 3)
-#' )
-#' # Write the dataset to a temporary file
-#' toy_file <- tempfile(fileext = ".txt")
-#' write.table(toy_data, file = toy_file, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
+#' @importFrom utils read.table
+#' @importFrom utils write.table
+#' @importFrom stats sd
 #'
-#' # Run roh_stat()
-#' roh_stat(toy_file)
+#' @examples
 #'
 roh_stat <- function(indiv_path) {
   dataset <- read.table(indiv_path, sep = "", header = T)

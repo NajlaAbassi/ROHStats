@@ -2,14 +2,16 @@
 #'
 #' homozyg_density() determines the minimum SNP density (in Mb) for the segment
 #' to be considered ROH
-#' 
+#'
 #' @param bim_path a PLINK .bim file
 #'
 #' @return snp_density
 #' @export
 #'
+#' @importFrom utils read.table
+#'
 #' @examples
-#' 
+#'
 homozyg_density <- function(bim_path) {
   bim_file <- read.table(bim_path, sep = "\t", header = FALSE)
   snp_nb <- nrow(bim_file)

@@ -3,7 +3,7 @@
 #'
 #' @param data_path A character string indicating the path of the .hom.indiv
 #' PLINK output
-#' @param coverage A character string indicating the path of the .bim file, 
+#' @param coverage A character string indicating the path of the .bim file,
 #' used to calculate the genome coverage. It is assumed that you have 22 chromosome in this case.
 #' If the genome size is known it is possible to enter it as a numeric value
 #'
@@ -12,11 +12,11 @@
 #'  \item{Froh_summary_table}{A data frame with overall Froh summary statistics (Maximum, Minimum, Mean, SD)}
 #'  \item{by_population_Froh_stats}{A data frame with per population Froh summary statistics (Maximum, Minimum, Mean, SD)}
 #' @export
-#' 
+#'
 #' @import dplyr
 #'
 #' @examples
-#' 
+#'
 F_roh <- function(data_path,coverage) {
   # read input data
   data <- read.table(data_path, sep = "", header = T)
@@ -25,7 +25,7 @@ F_roh <- function(data_path,coverage) {
   if (is.character(coverage) && file.exists(coverage)) {
     bim_file <- read.table(coverage, sep = "\t", header = FALSE)
     snp_nb <- nrow(bim_file)
-    
+
     ## compute genome coverage
     covered_genome_size <- sum(tapply(bim_file$V4, bim_file$V1, function(x) max(x) - min(x)))
     # convert to megabase
@@ -34,10 +34,10 @@ F_roh <- function(data_path,coverage) {
     # Otherwise, coverage is assumed to be the numeric value `coverage`
     coverage <- as.numeric(coverage)
   }
-  
+
   # calculate FROH
   FROH <- data.frame(FID = data$FID, IID = data$IID, Froh = (data$KB / 1000) / coverage)
-  
+
   # Statistics for FROH
   # max
   maximum <- max(FROH$Froh, na.rm = TRUE)
@@ -55,7 +55,7 @@ F_roh <- function(data_path,coverage) {
     Mean = mean_value,
     SD = sd_value
   )
-  
+
   # compute statistics by population
   by_population_Froh_stats <- FROH %>%
     group_by(FID) %>%

@@ -18,26 +18,3 @@ A list, containing:
 \description{
 F_hom: calculates FHOM and reports basic statistics
 }
-\examples{
-# simulating a sample PLINK .het dataset
-sample_data <- data.frame(
-  FID = c("FAM001", "FAM002", "FAM003"),
-  IID = c("ID001", "ID002", "ID003"),
-  O_HOM = c(50, 30, 40),
-  E_HOM = c(45, 32, 38),
-  N_NM = c(100, 100, 100),
-  F = c(0.05, -0.02, 0.08)
-)
-
-# save sample data to a temporary file?
-temp_file <- tempfile(fileext = ".het")
-write.table(sample_data, temp_file, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
-
-# run F_hom on the simulated data
-result <- F_hom(temp_file)
-
-# access results
-result$FHOM_values
-result$summary_table
-
-}
